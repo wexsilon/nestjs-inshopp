@@ -10,6 +10,9 @@ async function bootstrap() {
     await app.listen(
         configService.get<number>('SERVER_PORT'),
         configService.get<string>('SERVER_HOST'),
+        () => {
+            console.log(`Start Server On http://${configService.get<string>('SERVER_HOST')}:${configService.get<number>('SERVER_PORT')}/`);
+        }
     );
 }
 bootstrap();

@@ -1,0 +1,1 @@
+npm run format ; git commit -am "prettier"

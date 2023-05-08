@@ -13,15 +13,15 @@ import { AppService } from './app.service';
                 config: ConfigService,
             ): Promise<MongooseModuleOptions> => {
                 let userPass = '';
-                if (config.get('DB_USER') && config.get('DB_PASS'))
-                    userPass = `${config.get('DB_USER')}:${config.get(
+                if (config.get<string>('DB_USER') && config.get<string>('DB_PASS'))
+                    userPass = `${config.get<string>('DB_USER')}:${config.get<string>(
                         'DB_PASS',
                     )}@`;
 
                 return {
-                    uri: `mongodb://${config.get('DB_HOST')}:${config.get(
+                    uri: `mongodb://${config.get<string>('DB_HOST')}:${config.get<number>(
                         'DB_PORT',
-                    )}/${config.get('DB_NAME')}`,
+                    )}/${config.get<string>('DB_NAME')}`,
                 };
             },
             inject: [ConfigService],

@@ -1,8 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import * as compression from 'compression';
+
+import { AppModule } from './app.module';
+
+
+
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -10,6 +16,8 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     app.disable('x-powered-by');
+
+    app.use(compression());
 
     const documentBuilder = new DocumentBuilder()
         .setTitle('InShopP Api')

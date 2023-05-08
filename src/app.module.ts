@@ -14,20 +14,25 @@ import { AuthModule } from './auth/auth.module';
                 config: ConfigService,
             ): Promise<MongooseModuleOptions> => {
                 let userPass = '';
-                if (config.get<string>('DB_USER') && config.get<string>('DB_PASS'))
-                    userPass = `${config.get<string>('DB_USER')}:${config.get<string>(
-                        'DB_PASS',
-                    )}@`;
+                if (
+                    config.get<string>('DB_USER') &&
+                    config.get<string>('DB_PASS')
+                )
+                    userPass = `${config.get<string>(
+                        'DB_USER',
+                    )}:${config.get<string>('DB_PASS')}@`;
 
                 return {
-                    uri: `mongodb://${config.get<string>('DB_HOST')}:${config.get<number>(
-                        'DB_PORT',
-                    )}/${config.get<string>('DB_NAME')}`,
+                    uri: `mongodb://${config.get<string>(
+                        'DB_HOST',
+                    )}:${config.get<number>('DB_PORT')}/${config.get<string>(
+                        'DB_NAME',
+                    )}`,
                 };
             },
             inject: [ConfigService],
         }),
-        AuthModule
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],

@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsStrongPassword, Matches } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsStrongPassword, Matches } from 'class-validator';
 
 export class SignUpUserDto {
     @ApiProperty({

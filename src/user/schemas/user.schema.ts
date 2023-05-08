@@ -5,7 +5,6 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-
     @Prop({ type: SchemaTypes.String, required: true })
     username: string;
 

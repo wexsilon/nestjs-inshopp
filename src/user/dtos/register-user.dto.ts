@@ -23,7 +23,7 @@ export class RegisterUserDto implements IEmail {
     })
     @IsEmail()
     email: string;
-    
+
     @ApiProperty({
         example: '1234ThrEAd8@',
         name: 'password',

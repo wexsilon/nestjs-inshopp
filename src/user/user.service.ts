@@ -13,12 +13,16 @@ export class UserService {
         @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     ) {}
 
-    public async checkExistsEmail(objEmail: IEmail): Promise<UserDocument | null> {
+    public async checkExistsEmail(
+        objEmail: IEmail,
+    ): Promise<UserDocument | null> {
         const u = await this.userModel.findOne({ email: objEmail.email });
         return u;
     }
 
-    public async createNewUser(registerUserDto: RegisterUserDto): Promise<UserDocument | null> {
+    public async createNewUser(
+        registerUserDto: RegisterUserDto,
+    ): Promise<UserDocument | null> {
         let u = await this.userModel.create(registerUserDto);
         u = await u.save();
         return u;

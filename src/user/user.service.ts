@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
+import argon2 from 'argon2';
 
 import { User, UserDocument } from './schemas/user.schema';
 import { RegisterUserDto } from './dtos/register-user.dto';
@@ -24,6 +25,7 @@ export class UserService {
         registerUserDto: RegisterUserDto,
     ): Promise<UserDocument | null> {
         let u = await this.userModel.create(registerUserDto);
+        u.password = await argon2.hash(u.password);
         u = await u.save();
         return u;
     }

@@ -8,7 +8,7 @@ export class User {
     @Prop({ type: SchemaTypes.String, required: true })
     username: string;
 
-    @Prop({ type: SchemaTypes.String, required: true })
+    @Prop({ type: SchemaTypes.String, required: true, unique: true })
     email: string;
 
     @Prop({ type: SchemaTypes.String, required: true })

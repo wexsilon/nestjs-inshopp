@@ -9,7 +9,9 @@ import { EmailVerify, EmailVerifySchema } from './schemas/email.verify.schema';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: EmailVerify.name, schema: EmailVerifySchema }]),
+        MongooseModule.forFeature([
+            { name: EmailVerify.name, schema: EmailVerifySchema },
+        ]),
         MailerModule.forRootAsync({
             useFactory: async (
                 config: ConfigService,

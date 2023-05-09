@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsStrongPassword, Matches } from 'class-validator';
+import { IEmail } from './email.interface';
 
-export class RegisterUserDto {
+export class RegisterUserDto implements IEmail {
     @ApiProperty({
         example: 'thread8th',
         name: 'username',
@@ -22,7 +23,7 @@ export class RegisterUserDto {
     })
     @IsEmail()
     email: string;
-
+    
     @ApiProperty({
         example: '1234ThrEAd8@',
         name: 'password',

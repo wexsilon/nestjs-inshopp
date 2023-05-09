@@ -4,9 +4,12 @@ import { MailerModule, MailerOptions } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { join } from 'path';
+import { MongooseModule } from '@nestjs/mongoose';
+import { EmailVerify, EmailVerifySchema } from './schemas/email.verify.schema';
 
 @Module({
     imports: [
+        MongooseModule.forFeature([{ name: EmailVerify.name, schema: EmailVerifySchema }]),
         MailerModule.forRootAsync({
             useFactory: async (
                 config: ConfigService,

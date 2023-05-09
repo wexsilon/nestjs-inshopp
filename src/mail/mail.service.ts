@@ -1,5 +1,10 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { ForbiddenException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+    ForbiddenException,
+    HttpException,
+    HttpStatus,
+    Injectable,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import {
@@ -19,10 +24,15 @@ export class MailService {
     ) {}
 
     async sendVerifyEmail(email: string) {
-
         let emailVerify = await this.emailVerifyModel.findOne({ email });
-        if (emailVerify && ((new Date().getTime() - emailVerify.timestamp.getTime()) / 60000 < 15 )) {
-            throw new ForbiddenException(['A confirmation email has recently been sent.']);
+        if (
+            emailVerify &&
+            (new Date().getTime() - emailVerify.timestamp.getTime()) / 60000 <
+                15
+        ) {
+            throw new ForbiddenException([
+                'A confirmation email has recently been sent.',
+            ]);
         } else {
             if (emailVerify) {
                 emailVerify.emailToken = randomUUID();
@@ -50,12 +60,11 @@ export class MailService {
                     },
                 });
             } catch (e) {
-                throw new HttpException('Can not send verification email.', HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new HttpException(
+                    'Can not send verification email.',
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                );
             }
-
         }
-
-
-
     }
 }

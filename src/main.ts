@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import compression from 'compression';
+import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -14,6 +15,8 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     app.disable('x-powered-by');
+
+    app.use(helmet());
 
     app.useGlobalPipes(new ValidationPipe());
 

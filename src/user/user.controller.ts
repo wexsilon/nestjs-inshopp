@@ -23,6 +23,7 @@ import { LoginUserDto } from './dtos/login-user.dto';
 import { RegisterUserDto } from './dtos/register-user.dto';
 import { UserService } from './user.service';
 import { MailService } from 'src/mail/mail.service';
+import { RegisterResponse } from './responses/register.reponse';
 
 @Controller('user')
 @ApiTags('user')
@@ -34,6 +35,7 @@ export class UserController {
 
     @Post('register')
     @ApiBody({ type: RegisterUserDto, required: true })
+    @ApiCreatedResponse({ type: RegisterResponse, description: 'succssful register operation' })
     @ApiException(() => BadRequestException, {
         description: 'invalid fields throw this exception',
     })
@@ -51,7 +53,7 @@ export class UserController {
             ),
         { description: 'if can not send verify email throw this' },
     )
-    async register(@Body() registerUserDto: RegisterUserDto) {
+    async register(@Body() registerUserDto: RegisterUserDto): Promise<RegisterResponse> {
         if (await this.userService.checkExistsEmail(registerUserDto)) {
             throw new NotAcceptableException([
                 'this email was registered try another.',
@@ -59,9 +61,7 @@ export class UserController {
         }
         await this.userService.createNewUser(registerUserDto);
         this.mailService.sendVerifyEmail(registerUserDto.email);
-        return {
-            message: 'Ok',
-        };
+        return new RegisterResponse();
     }
 
     @Post('login')

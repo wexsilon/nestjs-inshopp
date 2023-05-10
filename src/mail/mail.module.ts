@@ -28,13 +28,13 @@ import { EmailVerify, EmailVerifySchema } from './schemas/email.verify.schema';
                         socketTimeout: 120000,
                     },
                     defaults: {
-                        from: `"No Reply" <${config.get<string>(
+                        from: `"InShopP" <${config.get<string>(
                             'EMAIL_USER',
                         )}>`,
                     },
                     template: {
                         adapter: new EjsAdapter(),
-                        dir: join(__dirname, '..', '..', '..', 'views', 'mail'),
+                        dir: join(__dirname, '..', '..', 'views', 'mail'),
                         options: {},
                     },
                 };

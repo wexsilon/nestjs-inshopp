@@ -60,6 +60,7 @@ export class MailService {
                     },
                 });
             } catch (e) {
+                console.log(e);
                 throw new HttpException(
                     'Can not send verification email.',
                     HttpStatus.INTERNAL_SERVER_ERROR,

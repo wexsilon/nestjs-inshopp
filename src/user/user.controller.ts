@@ -14,6 +14,7 @@ import {
 import {
     ApiBody,
     ApiCreatedResponse,
+    ApiParam,
     ApiResponse,
     ApiTags,
 } from '@nestjs/swagger';
@@ -82,6 +83,7 @@ export class UserController {
     }
 
     @Get('verify/:token')
+    @ApiParam({ type: String, name: 'token', required: true })
     async verify(@Param('token', ParseUUIDPipe) token: string) {
         const r = await this.userService.verifyUser(token);
         if (r) {

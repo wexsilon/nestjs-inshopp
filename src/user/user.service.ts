@@ -58,7 +58,7 @@ export class UserService {
         });
         if (user) {
             if (await argon2.verify(user.password, loginUserDto.password)) {
-                const accessToken = this.jwtService.sign({
+                const accessToken = await this.jwtService.signAsync({
                     email: user.email,
                     oid: user.id,
                 });

@@ -9,6 +9,7 @@ import {
     EmailVerify,
     EmailVerifySchema,
 } from 'src/mail/schemas/email.verify.schema';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
     imports: [
@@ -18,7 +19,7 @@ import {
         ]),
         MailModule,
     ],
-    providers: [UserService],
+    providers: [UserService, JwtStrategy],
     controllers: [UserController],
 })
 export class UserModule {}

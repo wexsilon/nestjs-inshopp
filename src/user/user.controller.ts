@@ -35,7 +35,10 @@ export class UserController {
 
     @Post('register')
     @ApiBody({ type: RegisterUserDto, required: true })
-    @ApiCreatedResponse({ type: RegisterResponse, description: 'succssful register operation' })
+    @ApiCreatedResponse({
+        type: RegisterResponse,
+        description: 'succssful register operation',
+    })
     @ApiException(() => BadRequestException, {
         description: 'invalid fields throw this exception',
     })
@@ -53,7 +56,9 @@ export class UserController {
             ),
         { description: 'if can not send verify email throw this' },
     )
-    async register(@Body() registerUserDto: RegisterUserDto): Promise<RegisterResponse> {
+    async register(
+        @Body() registerUserDto: RegisterUserDto,
+    ): Promise<RegisterResponse> {
         if (await this.userService.checkExistsEmail(registerUserDto)) {
             throw new NotAcceptableException([
                 'this email was registered try another.',
@@ -68,6 +73,7 @@ export class UserController {
     @ApiBody({ type: LoginUserDto, required: true })
     async login(@Body() loginUserDto: LoginUserDto) {
         if (await this.userService.checkExistsEmail(loginUserDto)) {
+            this.userService.validatteUser(loginUserDto);
         } else {
             throw new NotAcceptableException([
                 "this email wasn't in the database.",
@@ -76,5 +82,11 @@ export class UserController {
     }
 
     @Get('verify/:token')
-    async verify(@Param('token', ParseUUIDPipe) token: string) {}
+    async verify(@Param('token', ParseUUIDPipe) token: string) {
+        const r = await this.userService.verifyUser(token);
+        if (r) {
+            return { message: 'user verfied successful' };
+        }
+        return { message: 'faild to verified user' };
+    }
 }

@@ -28,9 +28,7 @@ import { EmailVerify, EmailVerifySchema } from './schemas/email.verify.schema';
                         socketTimeout: 120000,
                     },
                     defaults: {
-                        from: `"InShopP" <${config.get<string>(
-                            'EMAIL_USER',
-                        )}>`,
+                        from: `"InShopP" <${config.get<string>('EMAIL_USER')}>`,
                     },
                     template: {
                         adapter: new EjsAdapter(),

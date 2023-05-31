@@ -10,6 +10,8 @@ import {
     EmailVerifySchema,
 } from 'src/mail/schemas/email.verify.schema';
 import { JwtStrategy } from './jwt.strategy';
+import { JwtAuthGuard } from './guards/jwtauth/jwt.auth.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
@@ -18,8 +20,10 @@ import { JwtStrategy } from './jwt.strategy';
             { name: EmailVerify.name, schema: EmailVerifySchema },
         ]),
         MailModule,
+        JwtModule,
     ],
-    providers: [UserService, JwtStrategy],
+    providers: [UserService, JwtStrategy, JwtAuthGuard],
     controllers: [UserController],
+    exports: [JwtAuthGuard],
 })
 export class UserModule {}

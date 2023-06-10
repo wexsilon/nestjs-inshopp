@@ -10,20 +10,16 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CartService } from './cart.service';
-// import { Roles } from 'src/auth/decorators/roles.decorator';
-// import { Role } from 'src/auth/enums/role.enum';
-// import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-// import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { ItemDto } from './dto/item.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
 
 @Controller('cart')
 @ApiTags('cart')
 export class CartController {
     constructor(private readonly cartService: CartService) {}
 
-    // @UseGuards(JwtAuthGuard, RolesGuard)
-    // @Roles(Role.User)
+    @UseGuards(JwtAuthGuard)
     @Post()
     async addItemToCart(@Req() req, @Body() itemDto: ItemDto) {
         const userId = req.user.userId;
@@ -31,8 +27,7 @@ export class CartController {
         return cart;
     }
 
-    // @UseGuards(JwtAuthGuard, RolesGuard)
-    // @Roles(Role.User)
+    @UseGuards(JwtAuthGuard)
     @Delete()
     async removeItemFromCart(@Req() req, @Body('productId') productId: string) {
         const userId = req.user.userId;
@@ -44,8 +39,7 @@ export class CartController {
         return cart;
     }
 
-    // @UseGuards(JwtAuthGuard, RolesGuard)
-    // @Roles(Role.User)
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async deleteCart(@Param('id') userId: string) {
         const cart = await this.cartService.deleteCart(userId);

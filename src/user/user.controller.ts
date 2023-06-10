@@ -74,7 +74,7 @@ export class UserController {
     @ApiBody({ type: LoginUserDto, required: true })
     async login(@Body() loginUserDto: LoginUserDto) {
         if (await this.userService.checkExistsEmail(loginUserDto)) {
-            this.userService.validatteUser(loginUserDto);
+            return await this.userService.validatteUser(loginUserDto);
         } else {
             throw new NotAcceptableException([
                 "this email wasn't in the database.",

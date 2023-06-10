@@ -12,6 +12,7 @@ import {
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './guards/jwtauth/jwt.auth.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
     imports: [
@@ -20,7 +21,15 @@ import { JwtModule } from '@nestjs/jwt';
             { name: EmailVerify.name, schema: EmailVerifySchema },
         ]),
         MailModule,
-        JwtModule,
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => {
+                return {
+                    secret: configService.get<string>('JWT_SECRET'),
+                };
+            },
+            inject: [ConfigService],
+        }),
     ],
     providers: [UserService, JwtStrategy, JwtAuthGuard],
     controllers: [UserController],

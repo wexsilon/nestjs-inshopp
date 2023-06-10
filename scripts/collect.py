@@ -20,14 +20,15 @@ from instagram_private_api import (
     __version__ as client_version)
 
 
-# socks.setdefaultproxy(socks.HTTP, '127.0.0.1', 2081)
+# socks.setdefaultproxy(socks.SOCKS5, '127.0.0.1', 2080)
 # socket.socket = socks.socksocket
 
 # _create_unverified_https_context = ssl._create_unverified_context
 # ssl._create_default_https_context = _create_unverified_https_context
 
 
-openai.api_key = "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"
+openai.api_key = "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"
+# openai.api_key = "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"
 
 mongoClient = pymongo.MongoClient("mongodb://localhost:27017/inshopp")
 inshoppDB = mongoClient.get_database()
@@ -114,15 +115,15 @@ def get_feed(tid):
 #     print('ClientCookieExpiredError/ClientLoginRequiredError: {0!s}'.format(e))
 #     api = Client(username, password, timeout=30, on_login=lambda x: onlogin_callback(x, settings_file_path))
 
-target_user = 'tak_tshirt' # sys.argv[1]
+target_user = sys.argv[1]
 # content = api.username_info(target_user)
 target_id = '11111'#content['user']['pk']
 
 # posts = get_feed(target_id)
 
-with open('tt.json', 'r') as f:
+with open('scripts/tt.json', 'r') as f:
     posts = json.loads(f.read())
-
+# print(len(posts))
 for post in posts:
     txt = "extract price and name of product without any comment, return the result in the following JSON format {\"price\": <INT>, \"name\": <STRING>}"
     txt += '\n\n'
@@ -144,8 +145,9 @@ for post in posts:
         continue
     
     imageFilename = f"{post['carousel_media'][0]['id']}.jpg"
-    imageFilename = os.path.join(os.getcwd(), 'public', 'img', 'posts')
     imageUrl = f'/public/img/posts/{imageFilename}'
+    imageFilename = os.path.join(os.getcwd(), 'public', 'img', 'posts', imageFilename)
+    
     if post['media_type'] == 8: # Carousel/Album type
         dimg = post['carousel_media'][0]['image_versions2']['candidates'][0]['url']
         # with open(imageFilename, 'wb') as handle:
@@ -175,4 +177,4 @@ for post in posts:
     #     'username': target_user,
     #     'userid': target_id
     # })
-print('ok')
+print('ok', end="")

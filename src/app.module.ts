@@ -9,6 +9,8 @@ import { MailModule } from './mail/mail.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
+import { ShopModule } from './shop/shop.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
     imports: [
@@ -43,6 +45,8 @@ import { PostsModule } from './posts/posts.module';
         UserModule,
         MailModule,
         PostsModule,
+        ShopModule,
+        CartModule,
     ],
     controllers: [AppController],
     providers: [AppService],

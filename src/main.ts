@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import compression from 'compression';
@@ -8,9 +8,25 @@ import helmet from 'helmet';
 
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import express from 'express';
+import fs from 'node:fs';
+import spdy from 'spdy';
 
 async function bootstrap() {
-    const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    const expressApp = express();
+    const spdyOpts = {
+      key: fs.readFileSync('test.key'),
+      cert: fs.readFileSync('test.crt'),
+    };
+    const server = spdy.createServer(spdyOpts, expressApp);
+  
+    // const app = await NestFactory.create(
+    //   AppModule,
+    //   new ExpressAdapter(expressApp),
+    // );
+
+    const app = await NestFactory.create<NestExpressApplication>(AppModule
+        ,new ExpressAdapter(expressApp));
 
     const configService = app.get(ConfigService);
 

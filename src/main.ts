@@ -16,21 +16,18 @@ import fs from 'node:fs';
 import spdy from 'spdy';
 
 async function bootstrap() {
+    /*
     const expressApp = express();
     const spdyOpts = {
         key: fs.readFileSync('test.key'),
         cert: fs.readFileSync('test.crt'),
     };
     const server = spdy.createServer(spdyOpts, expressApp);
-
-    // const app = await NestFactory.create(
-    //   AppModule,
-    //   new ExpressAdapter(expressApp),
-    // );
+    */
 
     const app = await NestFactory.create<NestExpressApplication>(
         AppModule,
-        new ExpressAdapter(expressApp),
+        // new ExpressAdapter(expressApp),
     );
 
     const configService = app.get(ConfigService);

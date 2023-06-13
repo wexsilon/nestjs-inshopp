@@ -60,9 +60,9 @@ export class UserService {
             if (await argon2.verify(user.password, loginUserDto.password)) {
                 const accessToken = this.jwtService.sign({
                     email: user.email,
-                    oid: user._id,
+                    userId: user._id,
                 });
-                return { message: 'succssful login', token: accessToken };
+                return { message: 'succssful login', token: accessToken, userId: user._id };
             } else {
                 return { message: 'invalid password' };
             }

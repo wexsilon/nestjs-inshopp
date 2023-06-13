@@ -5,11 +5,15 @@ export type ItemDocument = Item & Document;
 
 @Schema()
 export class Item {
-    @Prop({ type: SchemaTypes.ObjectId, ref: 'Product' })
-    productId: string;
+    
+    //@Prop({ type: SchemaTypes.ObjectId, ref: 'Product' })
+    //productId: string;
+    
+    @Prop()
+    postid: string;
 
-    // @Prop()
-    // name: string;
+    @Prop()
+    name: string;
 
     @Prop()
     quantity: number;
@@ -19,6 +23,7 @@ export class Item {
 
     @Prop()
     subTotalPrice: number;
+    
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);

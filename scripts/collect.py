@@ -27,12 +27,11 @@ from instagram_private_api import (
 # ssl._create_default_https_context = _create_unverified_https_context
 
 
-openai.api_key = "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"
-# openai.api_key = "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"
+openai.api_key = "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"
 
 mongoClient = pymongo.MongoClient("mongodb://localhost:27017/inshopp")
 inshoppDB = mongoClient.get_database()
-igposts = inshoppDB.get_collection('posts')
+igposts = inshoppDB.get_collection('postts')
 api = None
 
 # igposts = []

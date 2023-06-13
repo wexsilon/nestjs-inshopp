@@ -17,7 +17,6 @@ import { CartModule } from './cart/cart.module';
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'public'),
         }),
-
         ConfigModule.forRoot({ isGlobal: true }),
         MongooseModule.forRootAsync({
             useFactory: async (

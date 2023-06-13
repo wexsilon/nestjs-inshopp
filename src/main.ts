@@ -14,6 +14,7 @@ import { ValidationPipe } from '@nestjs/common';
 import express from 'express';
 import fs from 'node:fs';
 import spdy from 'spdy';
+import { PostsService } from './posts/posts.service';
 
 async function bootstrap() {
     /*
@@ -31,6 +32,9 @@ async function bootstrap() {
     );
 
     const configService = app.get(ConfigService);
+    const postsService = app.get(PostsService);
+
+    await postsService.createSample();
 
     app.disable('x-powered-by');
 

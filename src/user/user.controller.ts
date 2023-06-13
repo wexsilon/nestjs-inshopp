@@ -83,7 +83,7 @@ export class UserController {
     }
 
     @Get('verify/:token')
-    @ApiParam({ type: String, name: 'token', required: true })
+    @ApiParam({ type: String, name: 'token', required: true, example: 'f9519380-134a-41d1-be8a-d686b5a0ff48' })
     async verify(@Param('token', ParseUUIDPipe) token: string) {
         const r = await this.userService.verifyUser(token);
         if (r) {

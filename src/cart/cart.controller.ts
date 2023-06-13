@@ -7,11 +7,12 @@ import {
     UseGuards,
     NotFoundException,
     Delete,
+    Get
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CartService } from './cart.service';
 import { ItemDto } from './dto/item.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
 
 @Controller('cart')
@@ -21,13 +22,20 @@ export class CartController {
 
     @UseGuards(JwtAuthGuard)
     @Post()
+    @ApiBody({ type: ItemDto, required: true })
     async addItemToCart(@Req() req, @Body() itemDto: ItemDto) {
-        const userId = req.user.userId;
+        const userId = req.user.oid;
         const cart = await this.cartService.addItemToCart(userId, itemDto);
         return cart;
     }
 
     @UseGuards(JwtAuthGuard)
+    @Get('get')
+    async getCart(@Req() req) {
+        return await this.cartService.getCart(req.user.oid);
+    }
+
+    /*@UseGuards(JwtAuthGuard)
     @Delete()
     async removeItemFromCart(@Req() req, @Body('productId') productId: string) {
         const userId = req.user.userId;
@@ -45,5 +53,7 @@ export class CartController {
         const cart = await this.cartService.deleteCart(userId);
         if (!cart) throw new NotFoundException('Cart does not exist');
         return cart;
-    }
+    }*/
+
+
 }

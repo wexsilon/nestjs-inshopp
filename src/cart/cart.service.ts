@@ -41,15 +41,17 @@ export class CartService {
     }
 
     async addItemToCart(userId: string, itemDto: ItemDto) {
-        const { productId, quantity, price } = itemDto;
+        const { postid, quantity, price } = itemDto;
         const subTotalPrice = quantity * price;
 
         const cart = await this.getCart(userId);
 
         if (cart) {
             const itemIndex = cart.items.findIndex((item) => {
-                item.productId == productId;
+                return item.postid === postid;
             });
+            console.log(itemIndex);
+            
             if (itemIndex >= 0) {
                 const item = cart.items[itemIndex];
                 item.quantity = Number(item.quantity) + Number(quantity);
@@ -75,7 +77,7 @@ export class CartService {
     async removeItemFromCart(userId: string, productId: string): Promise<any> {
         const cart = await this.getCart(userId);
         const itemIndex = cart.items.findIndex(
-            (item) => item.productId == productId,
+            (item) => item.postid == productId,
         );
 
         if (itemIndex >= 0) {

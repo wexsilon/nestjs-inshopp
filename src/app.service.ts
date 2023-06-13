@@ -3,9 +3,7 @@ import { PostsService } from './posts/posts.service';
 
 @Injectable()
 export class AppService {
-    constructor(private readonly postsService: PostsService) {
-
-    }
+    constructor(private readonly postsService: PostsService) {}
 
     getHello(): string {
         return 'Hello World!';

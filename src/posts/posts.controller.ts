@@ -22,14 +22,24 @@ export class PostsController {
 
     @UseGuards(JwtAuthGuard)
     @Get(':id')
-    @ApiParam({ type: String, name: 'id', required: true, example: 'Cs5d0V5oQCA' })
+    @ApiParam({
+        type: String,
+        name: 'id',
+        required: true,
+        example: 'Cs5d0V5oQCA',
+    })
     async findOne(@Param('id') id: string) {
         return await this.postsService.findOne(id);
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('collect/:username')
-    @ApiParam({ type: String, name: 'username', required: true, example: 'tak_tshirt' })
+    @ApiParam({
+        type: String,
+        name: 'username',
+        required: true,
+        example: 'tak_tshirt',
+    })
     async collectPost(@Param('username') username: string) {
         const bf = execSync(`python scripts/collect.py "${username}"`);
         return { message: bf.toString() };

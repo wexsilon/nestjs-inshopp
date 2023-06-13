@@ -51,7 +51,7 @@ export class CartService {
                 return item.postid === postid;
             });
             console.log(itemIndex);
-            
+
             if (itemIndex >= 0) {
                 const item = cart.items[itemIndex];
                 item.quantity = Number(item.quantity) + Number(quantity);

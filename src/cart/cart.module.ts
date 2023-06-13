@@ -8,7 +8,7 @@ import { PostsModule } from 'src/posts/posts.module';
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: Cart.name, schema: CartSchema }]),
-        PostsModule
+        PostsModule,
     ],
     providers: [CartService],
     controllers: [CartController],

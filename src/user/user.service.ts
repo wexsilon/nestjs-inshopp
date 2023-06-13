@@ -62,7 +62,11 @@ export class UserService {
                     email: user.email,
                     userId: user._id,
                 });
-                return { message: 'succssful login', token: accessToken, userId: user._id };
+                return {
+                    message: 'succssful login',
+                    token: accessToken,
+                    userId: user._id,
+                };
             } else {
                 return { message: 'invalid password' };
             }

@@ -7,7 +7,7 @@ import {
     UseGuards,
     NotFoundException,
     Delete,
-    Get
+    Get,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CartService } from './cart.service';
@@ -54,6 +54,4 @@ export class CartController {
         if (!cart) throw new NotFoundException('Cart does not exist');
         return cart;
     }*/
-
-
 }

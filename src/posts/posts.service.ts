@@ -6,7 +6,8 @@ import { PostDocument, Postt } from './schemas/post.schema';
 @Injectable()
 export class PostsService {
     constructor(
-        @InjectModel(Postt.name) private readonly postModel: Model<PostDocument>,
+        @InjectModel(Postt.name)
+        private readonly postModel: Model<PostDocument>,
     ) {}
 
     async findOne(id: string) {
@@ -15,7 +16,6 @@ export class PostsService {
     }
 
     async findAllByUsername(username: string) {
-        
         return await this.postModel.find({ username });
     }
 

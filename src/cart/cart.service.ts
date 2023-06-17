@@ -74,10 +74,10 @@ export class CartService {
         }
     }
 
-    async removeItemFromCart(userId: string, productId: string): Promise<any> {
+    async removeItemFromCart(userId: string, postid: string): Promise<any> {
         const cart = await this.getCart(userId);
         const itemIndex = cart.items.findIndex(
-            (item) => item.postid == productId,
+            (item) => item.postid == postid,
         );
 
         if (itemIndex >= 0) {

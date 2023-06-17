@@ -12,7 +12,7 @@ import {
 import { Request } from 'express';
 import { CartService } from './cart.service';
 import { ItemDto } from './dto/item.dto';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
 
 @Controller('cart')
@@ -35,23 +35,29 @@ export class CartController {
         return await this.cartService.getCart(req.user.oid);
     }
 
-    /*@UseGuards(JwtAuthGuard)
-    @Delete()
-    async removeItemFromCart(@Req() req, @Body('productId') productId: string) {
-        const userId = req.user.userId;
+    @UseGuards(JwtAuthGuard)
+    @Delete(':postid')
+    @ApiParam({
+        type: String,
+        name: 'postid',
+        required: true,
+        example: 'Cs5d0V5oQCA',
+    })
+    async removeItemFromCart(@Req() req, @Param('postid') postid: string) {
+        const userId = req.user.oid;
         const cart = await this.cartService.removeItemFromCart(
             userId,
-            productId,
+            postid,
         );
         if (!cart) throw new NotFoundException('Item does not exist');
         return cart;
     }
 
     @UseGuards(JwtAuthGuard)
-    @Delete(':id')
-    async deleteCart(@Param('id') userId: string) {
-        const cart = await this.cartService.deleteCart(userId);
+    @Delete('clear')
+    async deleteCart(@Req() req) {
+        const cart = await this.cartService.deleteCart(req.user.oid);
         if (!cart) throw new NotFoundException('Cart does not exist');
         return cart;
-    }*/
+    }
 }

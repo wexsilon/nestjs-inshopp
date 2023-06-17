@@ -115,13 +115,13 @@ def get_feed(tid):
 #     api = Client(username, password, timeout=30, on_login=lambda x: onlogin_callback(x, settings_file_path))
 
 target_user = sys.argv[1]
-# content = api.username_info(target_user)
-target_id = '11111'#content['user']['pk']
+content = api.username_info(target_user)
+target_id = content['user']['pk']
 
-# posts = get_feed(target_id)
+posts = get_feed(target_id)
 
-with open('scripts/tt.json', 'r') as f:
-    posts = json.loads(f.read())
+# with open('scripts/tt.json', 'r') as f:
+#     posts = json.loads(f.read())
 # print(len(posts))
 for post in posts:
     txt = "extract price and name of product without any comment, return the result in the following JSON format {\"price\": <INT>, \"name\": <STRING>}"

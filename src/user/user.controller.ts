@@ -14,6 +14,8 @@ import {
 import {
     ApiBody,
     ApiCreatedResponse,
+    ApiNotAcceptableResponse,
+    ApiOkResponse,
     ApiParam,
     ApiResponse,
     ApiTags,
@@ -25,6 +27,8 @@ import { RegisterUserDto } from './dtos/register-user.dto';
 import { UserService } from './user.service';
 import { MailService } from 'src/mail/mail.service';
 import { RegisterResponse } from './responses/register.reponse';
+import { LoginUserSuccessfulDto } from './dtos/login-user-successful.dto';
+import { VerifyUserSuccessful } from './dtos/verify-user-successful.dto';
 
 @Controller('user')
 @ApiTags('user')
@@ -72,6 +76,10 @@ export class UserController {
 
     @Post('login')
     @ApiBody({ type: LoginUserDto, required: true })
+    @ApiCreatedResponse({ type: LoginUserSuccessfulDto, description: 'successful login' })
+    @ApiException(() => BadRequestException, {
+        description: 'inavlid email or password',
+    })
     async login(@Body() loginUserDto: LoginUserDto) {
         if (await this.userService.checkExistsEmail(loginUserDto)) {
             return await this.userService.validatteUser(loginUserDto);
@@ -89,11 +97,15 @@ export class UserController {
         required: true,
         example: 'f9519380-134a-41d1-be8a-d686b5a0ff48',
     })
+    @ApiOkResponse({ type: VerifyUserSuccessful })
+    @ApiException(() => NotAcceptableException, {
+        description: 'faild to verified user',
+    })
     async verify(@Param('token', ParseUUIDPipe) token: string) {
         const r = await this.userService.verifyUser(token);
         if (r) {
-            return { message: 'user verfied successful' };
+            return new VerifyUserSuccessful();
         }
-        return { message: 'faild to verified user' };
+        throw new NotAcceptableException('faild to verified user');
     }
 }

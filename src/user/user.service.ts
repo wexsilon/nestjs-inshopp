@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
@@ -12,6 +12,7 @@ import {
     EmailVerifyDocument,
 } from 'src/mail/schemas/email.verify.schema';
 import { LoginUserDto } from './dtos/login-user.dto';
+import { LoginUserSuccessfulDto } from './dtos/login-user-successful.dto';
 
 @Injectable()
 export class UserService {
@@ -62,16 +63,9 @@ export class UserService {
                     email: user.email,
                     userId: user._id,
                 });
-                return {
-                    message: 'succssful login',
-                    token: accessToken,
-                    userId: user._id,
-                };
-            } else {
-                return { message: 'invalid password' };
+                return new LoginUserSuccessfulDto('succssful login', accessToken, user._id);
             }
-        } else {
-            return { message: 'Not found user' };
         }
+        throw new BadRequestException('inavlid email or password');
     }
 }

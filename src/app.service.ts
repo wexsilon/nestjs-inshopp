@@ -6,11 +6,10 @@ export class AppService {
     constructor(private readonly postsService: PostsService) {}
 
     getHello(): string {
-        return 'Hello World!';
+        return 'Hello My Friend.';
     }
 
     async findPostByUsername(username: string) {
-        //console.log('|' + username + '|');
         return await this.postsService.findAllByUsername(username);
     }
 }

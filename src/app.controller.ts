@@ -1,14 +1,15 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { JwtAuthGuard } from './user/guards/jwtauth/jwt.auth.guard';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
+import { Postt } from './posts/schemas/post.schema';
 
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @Get()
-    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({ type: String, description: 'test route and return hello' })
     getHello() {
         return this.appService.getHello();
     }
@@ -21,8 +22,8 @@ export class AppController {
         required: true,
         example: 'tak_tshirt',
     })
+    @ApiOkResponse({ type: Postt, description: 'return posts by username' })
     async getShop(@Param('username') username: string) {
-        console.log(username);
         return await this.appService.findPostByUsername(username);
     }
 }

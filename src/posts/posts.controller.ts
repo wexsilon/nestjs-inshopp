@@ -9,11 +9,11 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
 import { execSync } from 'child_process';
+import { Postt } from './schemas/post.schema';
+import { PostCollectSuccessful } from './dto/post-collect-successful.dto';
 
 @Controller('p')
 @ApiTags('post')
@@ -28,6 +28,7 @@ export class PostsController {
         required: true,
         example: 'Cs5d0V5oQCA',
     })
+    @ApiOkResponse({type: Postt, description: 'get post by id'})
     async findOne(@Param('id') id: string) {
         return await this.postsService.findOne(id);
     }
@@ -40,8 +41,9 @@ export class PostsController {
         required: true,
         example: 'tak_tshirt',
     })
+    @ApiOkResponse({ type: PostCollectSuccessful, description: 'collect posts from instagram page and save into database' })
     async collectPost(@Param('username') username: string) {
         const bf = execSync(`python scripts/collect.py "${username}"`);
-        return { message: bf.toString() };
+        return new PostCollectSuccessful(bf.toString());
     }
 }

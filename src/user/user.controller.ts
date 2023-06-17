@@ -76,7 +76,10 @@ export class UserController {
 
     @Post('login')
     @ApiBody({ type: LoginUserDto, required: true })
-    @ApiCreatedResponse({ type: LoginUserSuccessfulDto, description: 'successful login' })
+    @ApiCreatedResponse({
+        type: LoginUserSuccessfulDto,
+        description: 'successful login',
+    })
     @ApiException(() => BadRequestException, {
         description: 'inavlid email or password',
     })

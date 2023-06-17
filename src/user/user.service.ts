@@ -63,7 +63,11 @@ export class UserService {
                     email: user.email,
                     userId: user._id,
                 });
-                return new LoginUserSuccessfulDto('succssful login', accessToken, user._id);
+                return new LoginUserSuccessfulDto(
+                    'succssful login',
+                    accessToken,
+                    user._id,
+                );
             }
         }
         throw new BadRequestException('inavlid email or password');

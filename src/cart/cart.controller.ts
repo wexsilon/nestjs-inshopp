@@ -45,10 +45,7 @@ export class CartController {
     })
     async removeItemFromCart(@Req() req, @Param('postid') postid: string) {
         const userId = req.user.oid;
-        const cart = await this.cartService.removeItemFromCart(
-            userId,
-            postid,
-        );
+        const cart = await this.cartService.removeItemFromCart(userId, postid);
         if (!cart) throw new NotFoundException('Item does not exist');
         return cart;
     }

@@ -3,11 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Cart, CartDocument } from './schemas/cart.schema';
 import { ItemDto } from './dto/item.dto';
+import { PostDocument, Postt } from 'src/posts/schemas/post.schema';
 
 @Injectable()
 export class CartService {
     constructor(
         @InjectModel(Cart.name) private readonly cartModel: Model<CartDocument>,
+        @InjectModel(Postt.name)
+        private readonly postModel: Model<PostDocument>,
     ) {}
 
     async createCart(
@@ -41,7 +44,9 @@ export class CartService {
     }
 
     async addItemToCart(userId: string, itemDto: ItemDto) {
-        const { postid, quantity, price } = itemDto;
+        const { postid, quantity } = itemDto;
+        const post = await this.postModel.findOne({ postid });
+        const price = post.price;
         const subTotalPrice = quantity * price;
 
         const cart = await this.getCart(userId);
@@ -58,7 +63,16 @@ export class CartService {
                 item.subTotalPrice = item.quantity * item.price;
                 cart.items[itemIndex] = item;
             } else {
-                cart.items.push({ ...itemDto, subTotalPrice });
+                /*cart.items.push({
+                    //...itemDto, subTotalPrice,
+                });*/
+                cart.items.push({
+                    name: post.name,
+                    postid,
+                    price,
+                    quantity,
+                    subTotalPrice,
+                });
             }
 
             this.reCalculateCart(cart);

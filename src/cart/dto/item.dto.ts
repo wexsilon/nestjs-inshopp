@@ -8,6 +8,7 @@ export class ItemDto {
     })
     postid: string;
 
+    /*
     @ApiProperty({
         name: 'name',
         required: true,
@@ -15,6 +16,7 @@ export class ItemDto {
         example: 'تیشرت سوپر لش نگین دار کد 551',
     })
     name: string;
+    */
 
     @ApiProperty({
         name: 'quantity',
@@ -24,6 +26,7 @@ export class ItemDto {
     })
     quantity: number;
 
+    /*
     @ApiProperty({
         name: 'price',
         required: true,
@@ -31,4 +34,5 @@ export class ItemDto {
         example: 320000,
     })
     price: number;
+    */
 }

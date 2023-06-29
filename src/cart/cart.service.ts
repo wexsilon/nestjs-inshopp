@@ -63,9 +63,6 @@ export class CartService {
                 item.subTotalPrice = item.quantity * item.price;
                 cart.items[itemIndex] = item;
             } else {
-                /*cart.items.push({
-                    //...itemDto, subTotalPrice,
-                });*/
                 cart.items.push({
                     name: post.name,
                     postid,

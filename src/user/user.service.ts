@@ -35,6 +35,7 @@ export class UserService {
         registerUserDto: RegisterUserDto,
     ): Promise<UserDocument | null> {
         let u = await this.userModel.create(registerUserDto);
+        u.verified = true;
         u.password = await argon2.hash(u.password);
         u = await u.save();
         return u;
@@ -67,6 +68,7 @@ export class UserService {
                     'succssful login',
                     accessToken,
                     user._id,
+                    user.username,
                 );
             }
         }

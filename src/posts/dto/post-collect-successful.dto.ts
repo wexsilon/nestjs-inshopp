@@ -1,3 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export class PostCollectSuccessful {
-    constructor(public message: string) {}
+    @ApiProperty({ example: 'ok' })
+    public message: string;
+    constructor(message: string) {
+        this.message = message;
+    }
 }

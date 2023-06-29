@@ -70,7 +70,7 @@ export class UserController {
             ]);
         }
         await this.userService.createNewUser(registerUserDto);
-        this.mailService.sendVerifyEmail(registerUserDto.email);
+        // this.mailService.sendVerifyEmail(registerUserDto.email);
         return new RegisterResponse();
     }
 

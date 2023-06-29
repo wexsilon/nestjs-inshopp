@@ -1,9 +1,4 @@
-import {
-    Controller,
-    Get,
-    Param,
-    UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
@@ -24,7 +19,7 @@ export class PostsController {
         required: true,
         example: 'Cs5d0V5oQCA',
     })
-    @ApiOkResponse({type: Postt, description: 'get post by id'})
+    @ApiOkResponse({ type: Postt, description: 'get post by id' })
     async findOne(@Param('id') id: string) {
         return await this.postsService.findOne(id);
     }
@@ -37,7 +32,10 @@ export class PostsController {
         required: true,
         example: 'tak_tshirt',
     })
-    @ApiOkResponse({ type: PostCollectSuccessful, description: 'collect posts from instagram page and save into database' })
+    @ApiOkResponse({
+        type: PostCollectSuccessful,
+        description: 'collect posts from instagram page and save into database',
+    })
     async collectPost(@Param('username') username: string) {
         const bf = execSync(`python scripts/collect.py "${username}"`);
         return new PostCollectSuccessful(bf.toString());

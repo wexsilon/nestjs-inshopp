@@ -22,7 +22,7 @@ export class AppController {
         required: true,
         example: 'tak_tshirt',
     })
-    @ApiOkResponse({ type: Postt, description: 'return posts by username' })
+    @ApiOkResponse({ type: [Postt], description: 'return posts by username' })
     async getShop(@Param('username') username: string) {
         return await this.appService.findPostByUsername(username);
     }

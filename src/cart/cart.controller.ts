@@ -11,7 +11,14 @@ import {
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { ItemDto } from './dto/item.dto';
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBody,
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiParam,
+    ApiResponse,
+    ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guards/jwtauth/jwt.auth.guard';
 import { Cart } from './schemas/cart.schema';
 
@@ -23,7 +30,10 @@ export class CartController {
     @UseGuards(JwtAuthGuard)
     @Post()
     @ApiBody({ type: ItemDto, required: true })
-    @ApiCreatedResponse({ type: Cart, description: 'add item to cart and return' })
+    @ApiCreatedResponse({
+        type: Cart,
+        description: 'add item to cart and return',
+    })
     async addItemToCart(@Req() req, @Body() itemDto: ItemDto) {
         const userId = req.user.oid;
         const cart = await this.cartService.addItemToCart(userId, itemDto);
